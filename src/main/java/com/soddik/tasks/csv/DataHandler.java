@@ -15,20 +15,18 @@ import java.util.logging.Logger;
 public class DataHandler {
     private static final Logger logger = Logger.getLogger(DataHandler.class.getSimpleName());
 
-    public static void writeData(List<String[]> list) {
+    public static void writeData(String filePath, List<String[]> list) {
         logger.info("Start: " + new Date());
-        File file = new File("sortedMyFile.csv");
-        try {
-            FileWriter fileWriter = new FileWriter(file);
-            CSVWriter csvWriter = new CSVWriter(fileWriter, ';',
-                    CSVWriter.NO_QUOTE_CHARACTER,
-                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
-                    CSVWriter.DEFAULT_LINE_END);
+        File file = new File(filePath);
+        try (FileWriter fileWriter = new FileWriter(file);
+             CSVWriter csvWriter = new CSVWriter(fileWriter, ';',
+                     CSVWriter.NO_QUOTE_CHARACTER,
+                     CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                     CSVWriter.DEFAULT_LINE_END)) {
+
             list.stream()
                     .toList()
                     .forEach(csvWriter::writeNext);
-
-            csvWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -39,7 +37,7 @@ public class DataHandler {
         List<String[]> list = new ArrayList<>();
         String pattern = "MM.dd.yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        for (int index = 0; index < 14_500_000; index++) {
+        for (int index = 0; index < 5_000_000; index++) {
             String[] strings = new String[8];
             strings[0] = String.valueOf(ThreadLocalRandom.current().nextInt(0, 2000));
             strings[1] = String.valueOf(ThreadLocalRandom.current().nextInt(500, 10000));

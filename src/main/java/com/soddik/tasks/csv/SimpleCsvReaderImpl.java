@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class SimpleCsvReaderImpl implements AbstractCsvReader {
     private final Logger logger = Logger.getLogger(SimpleCsvReaderImpl.class.getSimpleName());
-    protected final String separator = ";";
+    private final String separator = ";";
     private final File file;
 
     public SimpleCsvReaderImpl(File file) {

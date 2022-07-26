@@ -29,13 +29,7 @@ public class SimpleCsvReaderImpl implements AbstractCsvReader {
                 new InputStreamReader(Files.newInputStream(Paths.get(file.getAbsolutePath())), StandardCharsets.UTF_8))) {
             result = br.lines()
                     .skip(1)
-                    .map(line -> {
-                        String[] fields = line.split(separator);
-                        if (fields.length == 8) {
-                            return fields;
-                        }
-                        return null;
-                    }).filter(Objects::nonNull)
+                    .map(line -> line.split(separator))
                     .sorted(new CustomCsvComparator())
                     .collect(Collectors.toList());
         } catch (IOException e) {

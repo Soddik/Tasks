@@ -10,7 +10,6 @@ public class StringTasks {
             for (int index = 0; index < chars.length; index++) {
                 if (chars[index] == oldChar) {
                     chars[index] = newChar;
-                    break;
                 }
             }
         }

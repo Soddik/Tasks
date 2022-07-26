@@ -2,6 +2,6 @@ package com.soddik.tasks.csv;
 
 import java.util.List;
 
-public interface AbstractCsvReader {
+public interface CsvReader {
     List<String[]> parseFile();
 }

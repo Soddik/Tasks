@@ -9,11 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class SimpleCsvReaderImpl implements AbstractCsvReader {
+public class SimpleCsvReaderImpl implements CsvReader {
     private final Logger logger = Logger.getLogger(SimpleCsvReaderImpl.class.getSimpleName());
     private final String separator = ";";
     private final File file;

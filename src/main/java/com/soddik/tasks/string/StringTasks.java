@@ -16,6 +16,7 @@ public class StringTasks {
         }
         return new String(chars);
     }
+
     //task 2, Integer.valueOf(), Integer.parseInt()
     public int strToInt(String str) {
         int radix = 10;
@@ -49,6 +50,7 @@ public class StringTasks {
             throw new NumberFormatException(String.format("For input string: %s", str));
         }
     }
+
     //task 2,Double.valueOf(), Double.parseDouble()
     public double strToDouble(String str) {
         int radix = 10;
@@ -100,6 +102,7 @@ public class StringTasks {
             throw new NumberFormatException(String.format("For input string: %s", str));
         }
     }
+
     //task 3
     public void fizzBuzzReplace() {
         String fizz = "Fizz";

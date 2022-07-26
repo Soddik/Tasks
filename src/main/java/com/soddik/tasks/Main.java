@@ -1,6 +1,6 @@
 package com.soddik.tasks;
 
-import com.soddik.tasks.csv.AbstractCsvReader;
+import com.soddik.tasks.csv.CsvReader;
 import com.soddik.tasks.csv.SimpleCsvReaderImpl;
 import com.soddik.tasks.csv.DataHandler;
 
@@ -18,7 +18,7 @@ public class Main {
         File file = new File(PATH);
         logger.info("====Simple====");
         logger.info("Start: " + new Date());
-        AbstractCsvReader simple = new SimpleCsvReaderImpl(file);
+        CsvReader simple = new SimpleCsvReaderImpl(file);
         DataHandler.writeData(SORTED_PATH, simple.parseFile());
         logger.info("End: " + new Date());
     }

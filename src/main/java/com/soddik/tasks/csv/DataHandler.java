@@ -15,9 +15,10 @@ import java.util.logging.Logger;
 public class DataHandler {
     private static final Logger logger = Logger.getLogger(DataHandler.class.getSimpleName());
 
-    public static void writeData(String filePath, List<String[]> list) {
-        logger.info("Start: " + new Date());
-        File file = new File(filePath);
+    public static void writeData(File file, List<String[]> list) {
+        if (list == null || list.isEmpty()) {
+            throw new IllegalArgumentException("No corresponding data in list");
+        }
         try (FileWriter fileWriter = new FileWriter(file);
              CSVWriter csvWriter = new CSVWriter(fileWriter, ';',
                      CSVWriter.NO_QUOTE_CHARACTER,
@@ -28,21 +29,21 @@ public class DataHandler {
                     .toList()
                     .forEach(csvWriter::writeNext);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warning(e.getMessage());
         }
-        logger.info("End: " + new Date());
     }
 
     public static List<String[]> generateData() {
         List<String[]> list = new ArrayList<>();
         String pattern = "MM.dd.yyyy";
         SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        for (int index = 0; index < 5_000_000; index++) {
+        String[] header = new String[]{"FID", "SERIAL_NUM", "MEMBER_CODE", "ACCT_TYPE", "OPENED_DT", "ACCT_RTE_CDE", "REPORTING_DT", "CREDIT_LIMIT"};
+        list.add(header);
+        for (int index = 0; index < 14_500_000; index++) {
             String[] strings = new String[8];
             strings[0] = String.valueOf(ThreadLocalRandom.current().nextInt(0, 2000));
             strings[1] = String.valueOf(ThreadLocalRandom.current().nextInt(500, 10000));
-            String sb = ThreadLocalRandom.current().nextInt(1000, 9999) + "SM" + ThreadLocalRandom.current().nextInt(100000, 999999);
-            strings[2] = sb;
+            strings[2] = ThreadLocalRandom.current().nextInt(1000, 9999) + "SM" + ThreadLocalRandom.current().nextInt(100000, 999999);
             strings[3] = String.valueOf(ThreadLocalRandom.current().nextInt(0, 9));
             strings[4] = sdf.format(new Date());
             strings[5] = String.valueOf(ThreadLocalRandom.current().nextInt(0, 10));
@@ -50,7 +51,7 @@ public class DataHandler {
             strings[7] = String.valueOf(ThreadLocalRandom.current().nextInt(700000, 17000000));
             list.add(strings);
         }
-        logger.info(String.format("Generated %s", list.size()));
+        logger.info(String.format("Generated %s", list.size() - 1));
 
         return list;
     }

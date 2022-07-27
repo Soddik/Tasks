@@ -15,12 +15,12 @@ public class PartCsvSorterImpl implements CsvSorter {
     private final Logger logger = Logger.getLogger(PartCsvSorterImpl.class.getSimpleName());
     private final String separator = ";";
     private final File in;
-    private int maxRow = 1_000_000;
+    private int maxRowCount = 1_000_000;
     private String[] headers;
 
     public PartCsvSorterImpl(File in, int rowPerPart) {
         this.in = in;
-        maxRow = rowPerPart;
+        maxRowCount = rowPerPart;
     }
 
     public PartCsvSorterImpl(File in) {
@@ -42,15 +42,11 @@ public class PartCsvSorterImpl implements CsvSorter {
                     dir.mkdir();
                 }
 
-                long iterations = rowCount % maxRow != 0 ? (rowCount / maxRow) + 1 : rowCount / maxRow;
-                long minPart = rowCount % maxRow != 0 ? (iterations * maxRow) - rowCount : 0;
+                long iterations = rowCount % maxRowCount != 0 ? (rowCount / maxRowCount) + 1 : rowCount / maxRowCount;
 
                 int iteration = 0;
                 while (iteration < iterations) {
-                    if (iteration == iterations - 1 && minPart != 0) {
-                        sortAndWritePart(iteration, minPart);
-                    }
-                    sortAndWritePart(iteration, maxRow);
+                    sortAndWritePart(iteration, maxRowCount);
                     iteration++;
                 }
             }
@@ -63,7 +59,7 @@ public class PartCsvSorterImpl implements CsvSorter {
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(Files.newInputStream(Paths.get(in.getAbsolutePath())), StandardCharsets.UTF_8))) {
             File out = new File(String.format("parts/sortedPart_%s.csv", iteration));
-            long skipLines = iteration != 0 ? iteration * maxRow : 1;
+            long skipLines = iteration != 0 ? iteration * maxRowCount + 1 : 1;
             List<String[]> result = new ArrayList<>();
             result.add(headers);
             result.addAll(br.lines()
@@ -72,7 +68,7 @@ public class PartCsvSorterImpl implements CsvSorter {
                     .limit(limit)
                     .sorted(new CustomCsvComparator())
                     .toList());
-
+            System.out.println("iter: " + iteration + " size: " + result.size());
             DataHandler.writeData(out, result);
         } catch (IOException e) {
             logger.warning(e.getMessage());

@@ -5,6 +5,9 @@ import java.util.stream.IntStream;
 public class StringTasks {
     //task 1
     public String replace(String str, char oldChar, char newChar) {
+        if (str != null) {
+            throw new IllegalArgumentException("Entry string cannot be null");
+        }
         char[] chars = str.toCharArray();
         if (oldChar != newChar) {
             for (int index = 0; index < chars.length; index++) {

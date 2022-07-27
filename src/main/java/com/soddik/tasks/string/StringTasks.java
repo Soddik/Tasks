@@ -42,7 +42,10 @@ public class StringTasks {
             }
 
             int result = 0;
-            while (result != limit && i < len) {
+            while (i < len) {
+                if (result == limit) {
+                    throw  new NumberFormatException("Limit reached");
+                }
                 int digit = Character.digit(str.charAt(i++), radix);
                 result *= radix;
                 result -= digit;

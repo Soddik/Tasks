@@ -17,7 +17,17 @@
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>5.6</version>
+            <version>${opencsv.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-csv</artifactId>
+            <version>${apache.commons.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.davidmoten</groupId>
+            <artifactId>big-sorter</artifactId>
+            <version>${big.sorter.version}</version>
         </dependency>
     </dependencies>
 
@@ -25,6 +35,9 @@
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>
         <junit.version>5.8.2</junit.version>
+        <opencsv.version>5.6</opencsv.version>
+        <apache.commons.version>1.9.0</apache.commons.version>
+        <big.sorter.version>0.1.21</big.sorter.version>
     </properties>
 
 </project>
